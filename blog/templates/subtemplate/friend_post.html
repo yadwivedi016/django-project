@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+  <div class="title-div">
+    <h1 class="text-center text-dark">Friends Post</h1>
+  </div>
+{% endblock %}
+
+
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+      {% for data in posts %}
+        {% for key,value in friend_list.items  %}
+            {% if value == data.author.id %}
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm hover-card">
+                  <img src="{{ data.image.url }}" class="card-img-top" alt="{{ data.title }}">
+                  <div class="card-body">
+                    <small class ="text-info"><b>post by {{data.author}}</b></small>
+                    <h5 class="card-title">{{ data.title }}</h5>
+                    <p class="card-text">{{ data.content|slice:":100" }}...</p> <!-- Shorten the content -->
+                    <a href="{% url 'post_detail' data.id %}" class="btn btn-primary">Read More</a>
+                    {% for key, value in likes_count.items %}
+                      {% if key == data.id %}
+                        <p><b>Likes: {{ value }}</b></p>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+             {% endif %}
+         {% endfor %}
+       
+      {% endfor %}
+    </div>
+  </div>
+
+  <style>
+    .title-div {
+      margin-bottom: 20px;
+    }
+
+    .hover-card {
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s ease; /* Smooth transition */
+    }
+
+    .hover-card:hover {
+      transform: scale(1.05); /* Enlarge on hover */
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .btn {
+      display: block;
+      margin-top: 10px;
+    }
+  </style>
+
+
+{% endblock %}

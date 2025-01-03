@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="comments-section my-5 mx-auto" id="comments">
+    <h2 class="text-center mb-4">Leave a Comment</h2> <!-- Added a heading -->
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary bttn">Submit</button>
+    </form>
+</div>
+
+{% if not comments %}
+<div class="nodata">
+    <h2 class="text-danger">No Comment Found <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-size:100px;'>&#128542;</span></h2>
+</div>
+{% endif %}
+
+{% for data in comments %}
+<div class="comments">  
+    <h3 class="text-dark">{{ data.user }}</h3> 
+    <p class="text-dark">{{ data.comment }}</p> 
+
+    {% comment %} This is for comment {% endcomment %}
+    {% comment %} {% if post.author.id == user_id %}
+        <a href="{% url ''  %}"><button type="button" class="btn btn-primary" >Update</button></a>
+        <a href="{% url ''  %}"><button type="button" class="btn btn-danger" >Remove</button></a>
+    {% endif %} {% endcomment %}
+
+    {% if user.is_superuser %}
+        <div>
+            <a href="{% url 'delete_comment' data.id %}"><button type="button" class="btn-danger">Delete</button></a>
+        </div>
+    {% endif %}
+</div>
+{% endfor %}
+
+
+<style>
+    #comments {
+        padding: 20px; 
+        max-width: 600px; 
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+        border: 1px solid #ced4da; 
+    }
+
+    h2 {
+        color: #343a40; 
+    }
+
+    .bttn {
+        margin-top: 10px; 
+        width: 100%; /* Full-width button */
+    }
+    .comments {
+        margin-top: 5%;
+        margin-left: 10%;
+        margin-right: 10%;
+        padding: 20px;
+        border: 1px solid #ced4da; /* Light border for definition */
+        border-radius: 8px; /* Rounded corners */
+        background-color: #ffffff; /* White background for each comment */
+    }
+    .heading {
+        padding-left: 40%;
+    }
+    .nodata {
+        margin-top: 10%;
+        padding-left: 37%;
+    }
+</style>
+
+
+<script>
+    const toggleButton = document.getElementById('toggleButton');
+const navLinks = document.getElementById('navLinks');
+
+toggleButton.onclick = function() {
+    if (navLinks.style.left === '0px') {
+        navLinks.style.left = '-200px'; // Hide navbar
+    } else {
+        navLinks.style.left = '0px'; // Show navbar
+    }
+}
+
+</script>
+{% endblock %}

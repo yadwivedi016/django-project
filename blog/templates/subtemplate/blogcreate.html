@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+
+{% block pagetitle %}
+  <div class="title-div">
+    <h1 class="text-dark p-1">Create Blog</h1>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="border border-dark d-flex align-items-center flex-column p-5 content-div">
+    <form method="post" enctype="multipart/form-data" class="form-group">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-outline-success bttn">Submit</button>
+    </form>
+  </div>
+
+  <style>
+    .title-div {
+      display: flex;
+
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .content-div {
+      max-width: 600px; 
+      width: 100%; /* Full width for smaller screens */
+      margin: 3% auto; /* Center the form */
+      padding: 2%;
+      border: 2px solid #28a745; /* Green border */
+      border-radius: 5px; /* Rounded corners for the form */
+      background-color: #f9f9f9; /* Light background */
+    }
+
+    .form-group {
+      width: 100%;
+    }
+
+    input, textarea, select {
+      width: 100%; /* Full-width input fields */
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .bttn {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+{% endblock %}

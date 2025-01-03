@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block pagetitle %}
+  <div class="title-div">
+    <h1 class="text">Your Search</h1>
+  </div>
+{% endblock %}
+
+{% block nav2 %}
+   <nav2>
+      {% for key,value in post_type.items %}
+          <div class="bg-transparent nav2-div">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link nav2 ml-4 mb-3" href="{% url 'blog_type' key %}"><strong>{{ value }}</strong></a>
+              </li>
+            </ul>
+          </div>
+        {% endfor %}
+        </nav2>
+      {% endblock nav2 %}
+
+{% block content %}
+  <div class="container mt-5">
+    {% if not results %}
+      <div class="not-found">
+        <b class="text-danger">No Match Found&#128517;</b>
+      </div>
+    {% else %}
+      <div class="row">
+        {% for result in results %}
+          <div class="col-md-4">
+            <div class="data-div">
+              <div class="title">
+                <h2 class="text-primary text-center"><a href="{% url 'post_detail' result.id %}" class="text-primary">{{ result.title }}</a></h2>
+              </div>
+              <div class="img-div">
+                <a href="{% url 'post_detail' result.id %}"><img src="{{ result.image.url }}" alt="" class="img-fluid rounded" /></a>
+              </div>
+              <div class="p-div">
+                <p class="text-dark">{{ result.content|truncatewords:30 }}</p>
+              </div>
+              <div class="text-center">
+                <a href="{% url 'post_detail' result.id %}" class="btn btn-outline-primary">Show Full Post</a>
+              </div>
+              {% for key, value in likes.items %}
+                {% if key == result.id %}
+                  <div class="like-div text-center">
+                    <b class="text-success">Likes: {{ value }}</b>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <style>
+    .title-div {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    
+    .data-div {
+      margin: 15px;
+      padding: 20px;
+      border: 1px solid rgb(0, 120, 0);
+      border-radius: 10px; /* Rounded corners */
+      background-color: #f8f9fa; /* Light background for cards */
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      transition: transform 0.2s; /* Smooth hover effect */
+    }
+    
+    .data-div:hover {
+      transform: scale(1.05); /* Slightly enlarge on hover */
+    }
+    
+    .img-div img {
+      max-height: 200px; /* Limit image height */
+      object-fit: cover; /* Maintain aspect ratio */
+    }
+    
+    .not-found {
+      text-align: center;
+      margin-top: 20%;
+      font-size: 2rem; /* Increase font size */
+    }
+    
+    .text-dark {
+      color: #343a40; /* Darker text for better readability */
+    }
+  </style>
+{% endblock %}

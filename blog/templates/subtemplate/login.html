@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block navbar %}{% endblock  %}
+
+{% block content %}
+<div class="login-div">
+  <form method="post" class="form-group">
+    <h2>Login</h2> <!-- Using an h2 tag for the login title -->
+    
+    {% csrf_token %}
+    
+    <div class="username-area">
+      {{ form.username.label_tag }}
+      {{ form.username }}
+    </div>
+    
+    <div class="password-area">
+      {{ form.password.label_tag }}
+      {{ form.password }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary bttn">Login</button>
+    
+    <p class="signup-link">Don't have an account? <a href="{% url 'register' %}">Signup here</a></p>
+    
+  </form>
+</div>
+
+<style>
+  .login-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px; /* Fixed width for better appearance */
+    margin: auto;
+    margin-top: 10%;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adds a shadow for depth */
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .username-area,
+  .password-area {
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+
+  .bttn {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .bttn:hover {
+    background-color: #45a049;
+  }
+
+  .signup-link {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #007bff;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+{% endblock %}

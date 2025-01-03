@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block nav2 %}
+<nav2>
+    {% for key, value in post_type.items %}
+    <div class="bg-transparent nav2-div">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link nav2 ml-4 mb-3" href="{% url 'blog_type' key %}"><strong>{{ value }}</strong></a>
+            </li>
+        </ul>
+    </div>
+    {% endfor %}
+</nav2>
+{% endblock %}
+
+{% block pagetitle %}
+<div class="title-div">
+    <div><h1 class="text-dark p-1">Your Post</h1></div>
+    <div id="request_page"><b><a href="{% url 'request' %}" class="text-primary">Requests Page</a></b></div>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-5 d-flex"> <!-- Changed to container-fluid -->
+
+    <div id="one" class="col-md-8"> <!-- Posts section -->
+        <div class="row">
+            {% for data in posts %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm hover-card">
+                    <img src="{{ data.image.url }}" class="card-img-top" alt="{{ data.title }}" />
+                    <div class="card-body">
+                        <h5 class="card-title">{{ data.title }}</h5>
+                        <p class="card-text">{{ data.content|slice:':100' }}...</p>
+                        <a href="{% url 'post_detail' data.id %}" class="btn btn-primary">Read More</a>
+                        {% for key, value in likes_count.items %}
+                        {% if key == data.id %}
+                        <p><strong>Likes: {{ value }}</strong></p>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="two" class="col-md-4 people-div"> <!-- People section -->
+        <h2 class="text-center">Peoples</h2>
+        <div class="inner">
+            {% for data in user_list %}
+            {% if data.id != current_user and data.id not in friend_ids %}
+            <div class="user-list-item d-flex justify-content-between align-items-center">
+                <span>{{ data.username }}</span>
+                {% comment %} <p>{{data.id}}</p> {% endcomment %}
+                <a href="{% url 'generate_request' data.id %}">
+                    <button class="btn btn-outline-info follow-btn">Follow</button>
+                </a>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+
+<script>
+// Handle the Like button text toggle
+var buttons = document.getElementsByClassName('myButton')
+for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function () {
+        this.innerHTML = this.innerHTML.trim() === 'Like' ? 'Liked' : 'Like';
+    });
+}
+
+// Alert for unauthenticated users
+var notauserButtons = document.getElementsByClassName('notauser')
+for (var i = 0; i < notauserButtons.length; i++) {
+    notauserButtons[i].addEventListener('click', function () {
+        alert('Please Login to like or comment on this post');
+    });
+}
+</script>
+
+<style>
+.title-div {
+    display: flex;
+    margin-bottom: 20px;
+    padding-left: 43%;
+    margin-right: 5%;
+}
+
+.hover-card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease;
+}
+
+.hover-card:hover {
+    transform: scale(1.05);
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.btn {
+    display: block;
+    margin-top: 10px;
+}
+
+#two {
+    background: #343a40; /* Dark background */
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    height: 400px; /* Set a fixed height for the scrollbar */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.inner {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-list-item {
+    padding: 10px;
+    border-bottom: 1px solid #495057; /* Separator color */
+}
+
+.user-list-item:last-child {
+    border-bottom: none; /* Remove border for last item */
+}
+
+.follow-btn {
+    margin-left: 10px;
+}
+#request_page{
+    width: 80px;
+    height: auto;
+    color: black;
+    font-size: x-large;
+    padding-top: 6px;
+    padding-left: 65%;
+}
+</style>
+{% endblock %}

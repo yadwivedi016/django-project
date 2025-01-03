@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bloggyweb</title>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  </head>
+  <body>
+    {% block navbar %}
+      <div class="logo-div bg-dark text-white">
+        <h1 class="">BLoggYWeb</h1>
+        <a href="{% url 'logout_view' %}" id="logout"><b>Logout</b></a>
+      </div>
+      <div class="nav-div">
+        <nav class="navbar navbar-expand-lg navbar-light bg-secondary text-white">
+          <a class="navbar-brand" href="{% url 'worldpost' %} "><b>BLoggYWeb</b></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+              <a class="nav-item nav-link" href="{% url 'worldpost' %}"><b class="{% if nbar == 'World' %}active{% endif %} ">ALL Post</b></a>
+              <a class="nav-item nav-link" href="{% url 'blogcreate' %}"><b class="{% if nbar == 'create blog' %}active{% endif %} ">Create Blog</b></a><li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><b>Post</b></a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="nav-item nav-link" href="{% url 'viewblog' %}"><b class="{% if nbar == 'Home' %}active{% endif %} ">Your Post</b><span class="sr-only">(current)</span></a>
+
+                  <a class="nav-item nav-link" href="{% url 'friend_post' %}"><b class="{% if nbar == 'friend' %}active{% endif %} ">Friend Post</b><span class="sr-only">(current)</span></a>
+                  <div class="dropdown-divider"></div>
+                </div>
+              </li>
+            </div>
+            <form class="form-inline my-2 my-lg-0 ml-auto search-item" method="GET" action="{% url 'search' %}">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="query" />
+              <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+            </form>
+          </div>
+        </nav>
+        <nav></nav>
+      </div>
+    {% endblock %}
+
+    {% block nav2 %}
+
+    {% endblock %}
+
+    {% block pagetitle %}
+
+    {% endblock %}
+
+    <div class="container">
+      {% block content %}
+
+      {% endblock %}
+    </div>
+
+    <style>
+      body {
+        background: #2c3e50; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #3498db, #2c3e50); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #3498db, #2c3e50); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      }
+      .nav2-div {
+        display: flex;
+        justify-content: center;
+      }
+      
+      .nav2 {
+        color: #212f3d;
+        font-size: 20px;
+        display: flex;
+      }
+      nav2 {
+        display: flex;
+      }
+      
+      .nav2:hover {
+        color: black;
+        overflow: hidden;
+        transition: transform 0.2s ease;
+        transform: scale(1.8);
+      }
+      .search-item {
+        padding-right: 0%;
+      }
+      .navbar-brand {
+        margin-left: 2.2%;
+      }
+      .logo-div {
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+        margin-left: 0%;
+      }
+      #logout {
+        margin-left: 75%;
+        margin-bborder-bottom-top: solid 2px;
+        padding: 2px;
+        padding-top: 5px;
+        font-size: x-large;
+        color: white;
+      }
+      .logout-div {
+        display: flex;
+        margin-right: 2%;
+      }
+      .nav-div {
+        margin-bottom: 20px; /* Space below the navbar */
+      }
+      form {
+        padding-right: 5%;
+      }
+      .nav-item {
+        color: black;
+      }
+      
+      .active {
+        border-bottom: 4px solid;
+        color: black;
+        padding: 2px;
+      }
+    </style>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

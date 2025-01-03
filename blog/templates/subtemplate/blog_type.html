@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block nav2 %}
+   <nav2>
+      {% for key,value in post_type.items %}
+          <div class="bg-transparent nav2-div">
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link nav2 ml-4 mb-3" href="{% url 'blog_type' key %}"><strong>{{ value }}</strong></a>
+              </li>
+            </ul>
+          </div>
+        {% endfor %}
+        </nav2>
+      {% endblock nav2 %}
+
+{% block content %}
+  <div class="container mt-5">
+    <div class="row">
+        {% if not post %}
+        <div class="not-found mx-auto">
+            <b class="text-danger">No Match Found&#128517;</b>
+        </div>
+        {% endif %}
+      {% for data in post %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm hover-card">
+            <img src="{{ data.image.url }}" class="card-img-top " alt="{{ data.title }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ data.title }}</h5>
+              <p class="card-text">{{ data.content|slice:":100" }}...</p> <!-- Shorten the content -->
+              <a href="{% url 'post_detail' data.id %}" class="btn btn-primary">Read More</a>
+              {% for key, value in likes_count.items %}
+                {% if key == data.id %}
+                  <p><b>Likes: {{ value }}</b></p>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <style>
+    .title-div {
+      margin-bottom: 20px;
+    }
+
+    .hover-card {
+      border-radius: 10px;
+      overflow: hidden;
+      transition: transform 0.2s ease; /* Smooth transition */
+    }
+
+    .hover-card:hover {
+      transform: scale(1.05); /* Enlarge on hover */
+    }
+
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .btn {
+      display: block;
+      margin-top: 10px;
+    }
+    .not-found {
+        display: grid;
+        place-items: center;
+        font-size:xx-large;
+        width: 90%;
+        height: 50vh;
+    }
+  </style>
+
+
+{% endblock %}
